@@ -3,4 +3,4 @@ teachers = [{"id":1,"nome":"Thiaguinho","idade":30,"materia":"DevOps","observaco
 
 classes = [{"id":1,"descricao":"aulas sobre habilidades comportamentais","professor":2,"ativo":"sim"}]
 
-alunos = [{"id": 1,"nome": "Cleiton","idade": 20,"turma_id": 1,"data_nascimento": "2002-01-15","nota_primeiro_semestre": 8.5,"nota_segundo_semestre": 7.0}]
+students = [{"id": 1,"nome": "Cleiton","idade": 20,"turma_id": 1,"data_nascimento": "2002-01-15","nota_primeiro_semestre": 8.5,"nota_segundo_semestre": 7.0}]

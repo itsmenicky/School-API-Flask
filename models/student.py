@@ -1,7 +1,7 @@
 from dal.db import classes
-from dal.db import alunos   
+from dal.db import students   
 
-class Aluno:
+class Student:
     def __init__(self, id, nome, idade, turma_id, data_nascimento, nota_primeiro_semestre, nota_segundo_semestre):
         # Inicializa um objeto da classe Aluno
         self.id = id
@@ -32,47 +32,47 @@ class Aluno:
     @staticmethod
     def get_all():
         # Retorna todos os alunos na lista 'alunos', criando instâncias de Aluno
-        return [Aluno(**aluno) for aluno in alunos]
+        return [Student(**student) for student in students]
 
     @staticmethod
-    def get_by_id(aluno_id):
+    def get_by_id(student_id):
         # Busca um aluno pelo ID na lista 'alunos'
-        for aluno in alunos:
-            if aluno["id"] == aluno_id:
-                return Aluno(**aluno)
+        for student in students:
+            if student["id"] == student_id:
+                return Student(**student)
         return None  # Retorna None se o aluno não for encontrado
 
     @staticmethod
-    def add_aluno(aluno_data):
+    def add_student(student_data):
         # Cria um novo aluno com os dados fornecidos, atribuindo um novo ID
-        new_aluno = {
-            "id": len(alunos) + 1,
-            "nome": aluno_data['nome'],
-            "idade": aluno_data['idade'],
-            "turma_id": aluno_data['turma_id'],  # Associa o aluno a uma turma
-            "data_nascimento": aluno_data['data_nascimento'],
-            "nota_primeiro_semestre": aluno_data['nota_primeiro_semestre'],
-            "nota_segundo_semestre": aluno_data['nota_segundo_semestre']
+        new_student = {
+            "id": len(students) + 1,
+            "nome": student_data['nome'],
+            "idade": student_data['idade'],
+            "turma_id": student_data['turma_id'],  # Associa o aluno a uma turma
+            "data_nascimento": student_data['data_nascimento'],
+            "nota_primeiro_semestre": student_data['nota_primeiro_semestre'],
+            "nota_segundo_semestre": student_data['nota_segundo_semestre']
         }
-        alunos.append(new_aluno)
-        return Aluno(**new_aluno)
+        students.append(new_student)
+        return Student(**new_student)
 
     @staticmethod
-    def update_aluno(aluno_id, data):
+    def update_student(student_id, data):
         # Atualiza os dados de um aluno existente pelo ID
-        for aluno in alunos:
-            if aluno['id'] == aluno_id:
-                aluno['nome'] = data.get('nome', aluno['nome'])
-                aluno['idade'] = data.get('idade', aluno['idade'])
-                aluno['turma_id'] = data.get('turma_id', aluno['turma_id'])
-                aluno['data_nascimento'] = data.get('data_nascimento', aluno['data_nascimento'])
-                aluno['nota_primeiro_semestre'] = data.get('nota_primeiro_semestre', aluno['nota_primeiro_semestre'])
-                aluno['nota_segundo_semestre'] = data.get('nota_segundo_semestre', aluno['nota_segundo_semestre'])
-                return Aluno(**aluno)
+        for student in students:
+            if student['id'] == student_id:
+                student['nome'] = data.get('nome', student['nome'])
+                student['idade'] = data.get('idade', student['idade'])
+                student['turma_id'] = data.get('turma_id', student['turma_id'])
+                student['data_nascimento'] = data.get('data_nascimento', student['data_nascimento'])
+                student['nota_primeiro_semestre'] = data.get('nota_primeiro_semestre', student['nota_primeiro_semestre'])
+                student['nota_segundo_semestre'] = data.get('nota_segundo_semestre', student['nota_segundo_semestre'])
+                return Student(**student)
         return None
 
     @staticmethod
-    def delete_aluno(aluno_id):
+    def delete_student(student_id):
         # Remove um aluno da lista 'alunos' pelo ID
-        global alunos  # Acessa a lista global 'alunos'
-        alunos = [aluno for aluno in alunos if aluno["id"] != aluno_id]
+        global students  # Acessa a lista global 'alunos'
+        students = [student for student in students if student["id"] != student_id]
