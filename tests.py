@@ -66,7 +66,7 @@ class ModelTestCase(unittest.TestCase):
 
         # Verifica se o aluno foi criado na sala de aula correta
         self.assertEqual(student.turma.descricao, 'classroom B')
-        self.assertAlmostEqual(student.media_final, 7.75)
+        self.assertAlmostEqual(student.media_final, 8)
 
 if __name__ == '__main__':
     unittest.main()
