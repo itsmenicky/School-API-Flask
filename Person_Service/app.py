@@ -1,8 +1,20 @@
-from config import create_app
-from controllers.pessoa_controller import pessoa_bp
+from flask import Flask
+from config import myApp, db
+from PersonController.PersonController import person_bp
 
-app = create_app()
-app.register_blueprint(person_bp, url_prefix='/person')
+def create_app():
+    # Inicializa a aplicação Flask
+    app = myApp
+
+    # Registra os blueprints
+    app.register_blueprint(person_bp)
+
+    # Cria o banco de dados apenas no contexto da aplicação
+    with app.app_context():
+        db.create_all()
+
+    return app
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=5001)
+    app = create_app()
+    app.run(host=app.config["HOST"], port=app.config['PORT'], debug=app.config['DEBUG'])

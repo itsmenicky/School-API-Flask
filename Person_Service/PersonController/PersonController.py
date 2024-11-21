@@ -3,7 +3,7 @@ from PersonModel import PersonModel
 
 person_bp = Blueprint('person_bp', __name__)
 
-@pessoa_bp.route('/teachers', methods=['GET'])
+@person_bp.route('/teachers', methods=['GET'])
 def list_teachers():
     teachers = PersonModel.list_teachers()
     return jsonify(teachers)

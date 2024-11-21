@@ -1,29 +1,35 @@
-from flask import Blueprint, jsonify
-from ActivityModel import ActivityModel
-from Clients.Client_service import PersonServiceClient
+from flask import Blueprint, request, jsonify, render_template, redirect, url_for
+from ActivityModel.ActivityModel import Activity, ActivityNotFound
 
-activity_bp = Blueprint('activity_bp', __name__)
+activities_blueprint = Blueprint('activities', __name__)
 
-@activity_bp.route('/', methods=['GET'])
-def list_activities():
-    activities = ActivityModel.list_activities()
-    return jsonify(activities)
+@activities_blueprint.route('/atividades/', methods=['POST'])
+def create_activity():
+    new_activity = {
+        'id_disciplina': request.json['id_disciplina'],
+        'enunciado': request.json['enunciado'],
+        'respostas': request.json.get('respostas', [])
+    }
+    Activity.add_activity(new_activity)
+    return jsonify(Activity.get_all()), 201
 
-@activity_bp.route('/<int:id_activity>', methods=['GET'])
-def get_activity(id_activity):
+@activities_blueprint.route('/atividades/<int:activity_id>/', methods=['PUT'])
+def update_activity(activity_id):
     try:
-        activity = ActivityModel.get_activity(id_activity)
-        return jsonify(activity)
-    except ActivityModel.ActivityNotFound:
-        return jsonify({'error': 'Activity not found'}), 404
+        new_data = {
+            'id_disciplina': request.json['id_disciplina'],
+            'enunciado': request.json['enunciado'],
+            'respostas': request.json['respostas']
+        }
+        Activity.update_activity(activity_id, new_data)
+        return jsonify(Activity.get_by_id(activity_id))
+    except ActivityNotFound:
+        return jsonify({'message': 'Atividade não encontrada'}), 404
 
-@activity_bp.route('/<int:id_activity>/teacher/<int:teacher_id>', methods=['GET'])
-def get_activity_for_teacher(id_activity, teacher_id):
+@activities_blueprint.route('/atividades/<int:activity_id>/', methods=['DELETE'])
+def delete_activity(activity_id):
     try:
-        activity = ActivityModel.get_activity(id_activity)
-        if not PersonServiceClient.verify_teaches(teacher_id, activity['id_discipline']):
-            activity = activity.copy()
-            activity.pop('response', None)
-        return jsonify(activity)
-    except ActivityModel.ActivityNotFound:
-        return jsonify({'error': 'Activity not found'}), 404
+        Activity.delete_activity(activity_id)
+        return jsonify(Activity.get_all())
+    except ActivityNotFound:
+        return jsonify({'message': 'Atividade não encontrada'}), 404
