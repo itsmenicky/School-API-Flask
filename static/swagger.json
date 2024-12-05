@@ -185,7 +185,7 @@
                     "type": "integer"
                   },
                   "materia": {
-                    "type": "string"
+                      "type": "string"
                   },
                   "observacoes": {
                     "type": "string"
@@ -279,6 +279,543 @@
             }
           }
         }
+      },
+      "/classes/create": {
+        "post": {
+          "summary": "Criação de turma",
+          "description": "Envia dados para a criação da turma",
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Dados da turma a ser criada",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "descricao": {
+                    "type": "string"
+                  },
+                  "professor_id": {
+                    "type": "integer"
+                  },
+                  "ativo": {
+                    "type": "string"
+                  }
+                },
+                "required": ["descricao", "professor_id", "ativo"]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de turmas atualizada",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "descricao": {
+                      "type": "string"
+                    },
+                    "professor_id": {
+                      "type": "integer"
+                    },
+                    "ativo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/classroom/{id}": {
+        "get": {
+          "summary": "Informações de uma turma",
+          "description": "Puxa as informações de uma turma cadastrada",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID da turma",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "JSON com as informações da turma",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "descricao": {
+                    "type": "string"
+                  },
+                  "professor_id": {
+                    "type": "integer"
+                  },
+                  "ativo": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Mensagem de turma não encontrada",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Edição de uma turma",
+          "description": "Edita as informações de uma turma cadastrada",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID da turma",
+              "required": true,
+              "type": "integer"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Dados atualizados da turma",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "descricao": {
+                    "type": "string"
+                  },
+                  "professor_id": {
+                    "type": "integer"
+                  },
+                  "ativo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "JSON com as informações da turma atualizadas",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "descricao": {
+                    "type": "string"
+                  },
+                  "professor_id": {
+                    "type": "integer"
+                  },
+                  "ativo": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Mensagem de turma não encontrada",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/classes/all": {
+        "get": {
+          "summary": "Turmas cadastradas",
+          "description": "Puxa todas as turmas cadastradas",
+          "responses": {
+            "200": {
+              "description": "JSON com todas as turmas cadastradas",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "descricao": {
+                      "type": "string"
+                    },
+                    "professor_id": {
+                      "type": "integer"
+                    },
+                    "ativo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/classroom/{id}/delete": {
+        "delete": {
+          "summary": "Remoção de uma turma",
+          "description": "Remove uma turma do sistema",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID da turma",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "JSON informando que a turma foi removida com sucesso",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Mensagem de turma não encontrada",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/students/create": {
+        "post": {
+          "summary": "Criação de aluno",
+          "description": "Envia dados para a criação de um aluno",
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Dados do aluno a ser criado",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string"
+                  },
+                  "idade": {
+                    "type": "integer"
+                  },
+                  "turma_id": {
+                    "type": "integer"
+                  },
+                  "data_nascimento": {
+                    "type": "string"
+                  },
+                  "nota_primeiro_semestre": {
+                    "type": "number"
+                  },
+                  "nota_segundo_semestre": {
+                    "type": "number"
+                  }
+                },
+                "required": ["nome", "idade", "turma_id", "data_nascimento"]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de alunos atualizada",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "nome": {
+                      "type": "string"
+                    },
+                    "idade": {
+                      "type": "integer"
+                    },
+                    "turma_id": {
+                      "type": "integer"
+                    },
+                    "data_nascimento": {
+                      "type": "string"
+                    },
+                    "nota_primeiro_semestre": {
+                      "type": "number"
+                    },
+                    "nota_segundo_semestre": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/student/{id}": {
+        "get": {
+          "summary": "Informações de um aluno",
+          "description": "Puxa as informações de um aluno cadastrado",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do aluno",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "JSON com as informações do aluno",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "nome": {
+                    "type": "string"
+                  },
+                  "idade": {
+                    "type": "integer"
+                  },
+                  "turma_id": {
+                    "type": "integer"
+                  },
+                  "data_nascimento": {
+                    "type": "string"
+                  },
+                  "nota_primeiro_semestre": {
+                    "type": "number"
+                  },
+                  "nota_segundo_semestre": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Mensagem de aluno não encontrado",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Edição de um aluno",
+          "description": "Edita as informações de um aluno cadastrado",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do aluno",
+              "required": true,
+              "type": "integer"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Dados atualizados do aluno",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string"
+                  },
+                  "idade": {
+                    "type": "integer"
+                  },
+                  "turma_id": {
+                    "type": "integer"
+                  },
+                  "data_nascimento": {
+                    "type": "string"
+                  },
+                  "nota_primeiro_semestre": {
+                    "type": "number"
+                  },
+                  "nota_segundo_semestre": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "JSON com as informações do aluno atualizadas",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "nome": {
+                    "type": "string"
+                  },
+                  "idade": {
+                    "type": "integer"
+                  },
+                  "turma_id": {
+                    "type": "integer"
+                  },
+                  "data_nascimento": {
+                    "type": "string"
+                  },
+                  "nota_primeiro_semestre": {
+                    "type": "number"
+                  },
+                  "nota_segundo_semestre": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Mensagem de aluno não encontrado",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/students/all": {
+        "get": {
+          "summary": "Alunos cadastrados",
+          "description": "Puxa todos os alunos cadastrados",
+          "responses": {
+            "200": {
+              "description": "JSON com todos os alunos cadastrados",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "nome": {
+                      "type": "string"
+                    },
+                    "idade": {
+                      "type": "integer"
+                    },
+                    "turma_id": {
+                      "type": "integer"
+                    },
+                    "data_nascimento": {
+                      "type": "string"
+                    },
+                    "nota_primeiro_semestre": {
+                      "type": "number"
+                    },
+                    "nota_segundo_semestre": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/student/{id}/delete": {
+        "delete": {
+          "summary": "Remoção de um aluno",
+          "description": "Remove um aluno do sistema",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do aluno",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "JSON informando que o aluno foi removido com sucesso",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Mensagem de aluno não encontrado",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
-  }  
+  }
+  
