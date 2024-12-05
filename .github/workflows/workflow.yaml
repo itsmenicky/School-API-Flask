@@ -38,6 +38,7 @@ jobs:
         run: |
          pip install flask
          pip install Flask-SQLAlchemy
+         pip install flask_swagger_ui
          python3 -m unittest
 
   #Definimos o job de deploy (CD)
