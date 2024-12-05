@@ -1,0 +1,284 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "SchoolAPI",
+      "version": "1.0",
+      "description": "Documentação da API para controle escolar desenvolvida em Python"
+    },
+    "host": "https://school-api-flask-1.onrender.com/",
+    "schemes": [
+      "https"
+    ],
+    "paths": {
+      "/": {
+        "get": {
+          "summary": "Endpoint principal",
+          "description": "Acessa o index da API",
+          "responses": {
+            "200": {
+              "description": "Index"
+            }
+          }
+        }
+      },
+      "/teachers/create": {
+        "post": {
+          "summary": "Criação de professores",
+          "description": "Envia dados para a criação do professor",
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Dados do professor a ser criado",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string"
+                  },
+                  "idade": {
+                    "type": "integer"
+                  },
+                  "materia": {
+                    "type": "string"
+                  },
+                  "observacoes": {
+                    "type": "string"
+                  }
+                },
+                "required": ["nome", "idade", "materia"]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de professores atualizada",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "nome": {
+                      "type": "string"
+                    },
+                    "idade": {
+                      "type": "integer"
+                    },
+                    "materia": {
+                      "type": "string"
+                    },
+                    "observacoes": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/teacher/{id}": {
+        "get": {
+          "summary": "Informações de um professor",
+          "description": "Puxa as informações de um professor cadastrado",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do professor",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "JSON com as informações do professor",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "nome": {
+                    "type": "string"
+                  },
+                  "idade": {
+                    "type": "integer"
+                  },
+                  "materia": {
+                    "type": "string"
+                  },
+                  "observacoes": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Mensagem de professor não encontrado",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Edição de um professor",
+          "description": "Edita as informações de um professor cadastrado",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do professor",
+              "required": true,
+              "type": "integer"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Dados atualizados do professor",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string"
+                  },
+                  "idade": {
+                    "type": "integer"
+                  },
+                  "materia": {
+                    "type": "string"
+                  },
+                  "observacoes": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "JSON com as informações do professor atualizadas",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "nome": {
+                    "type": "string"
+                  },
+                  "idade": {
+                    "type": "integer"
+                  },
+                  "materia": {
+                    "type": "string"
+                  },
+                  "observacoes": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Mensagem de professor não encontrado",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/teachers/all": {
+        "get": {
+          "summary": "Professores cadastrados",
+          "description": "Puxa todos os professores cadastrados",
+          "responses": {
+            "200": {
+              "description": "JSON com todos os professores cadastrados",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "nome": {
+                      "type": "string"
+                    },
+                    "idade": {
+                      "type": "integer"
+                    },
+                    "materia": {
+                      "type": "string"
+                    },
+                    "observacoes": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/teacher/{id}/delete": {
+        "delete": {
+          "summary": "Remoção de um professor",
+          "description": "Remove um professor do sistema",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID do professor",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "JSON informando que o professor foi removido com sucesso",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Mensagem de professor não encontrado",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }  
