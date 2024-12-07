@@ -54,10 +54,15 @@ class Teacher(db.Model):
         teacher = Teacher.query.get(teacher_id)
         if not teacher:
             return TeacherNotFound
-        teacher.nome = new_data['nome']
-        teacher.idade = new_data['idade']
-        teacher.materia = new_data['materia']
-        teacher.observacoes = new_data['observacoes']
+        elif 'nome' in new_data:
+            teacher.nome = new_data['nome']
+        elif 'idade' in new_data:
+            teacher.idade = new_data['idade']
+        elif 'materia' in new_data:
+            teacher.materia = new_data['materia']
+        elif 'observacoes' in new_data:
+            teacher.observacoes = new_data['observacoes']
+            
         db.session.commit()
         return jsonify({"SUCESSO":"PROFESSOR ATUALIZADO COM SUCESSO"}), 200
 

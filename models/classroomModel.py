@@ -55,14 +55,19 @@ class Classroom(db.Model):
     @staticmethod
     def update_classroom(classroom_id, new_data):
         classroom = Classroom.query.get(classroom_id)
-        teacher = Teacher.query.get(new_data['professor_id'])
         if not classroom:
             raise ClassroomNotFound
-        elif not teacher:
-            raise TeacherNotFound
-        classroom.descricao = new_data['descricao']
-        classroom.professor_id = new_data['professor_id']
-        classroom.ativo = new_data['ativo']
+        else:
+            if 'descricao' in new_data:
+                classroom.descricao = new_data['descricao']
+            elif 'professor_id' in new_data:
+                teacher = Teacher.query.get(new_data['professor_id'])
+                if not teacher:
+                    raise TeacherNotFound
+                else:
+                    classroom.professor_id = new_data['professor_id']
+            elif 'ativo' in new_data:
+                classroom.ativo = new_data['ativo']
         db.session.commit()
 
     @staticmethod

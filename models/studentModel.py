@@ -73,17 +73,26 @@ class Student(db.Model):
     @staticmethod
     def update_student(student_id, new_data):
         student = Student.query.get(student_id)
-        classroom = Classroom.query.get(new_data['turma_id'])
         if not student:
             raise StudentNotFound
-        elif not classroom:
-            raise ClassroomNotFound
-        student.nome = new_data['nome']
-        student.idade = new_data['idade']
-        student.turma_id = new_data['turma_id']
-        student.data_nascimento = new_data['data_nascimento']
-        student.nota_primeiro_semestre = new_data['nota_primeiro_semestre']
-        student.nota_segundo_semestre = new_data['nota_segundo_semestre']
+        else:
+            if 'nome' in new_data:
+                student.nome = new_data['nome']
+            elif 'idade' in new_data:
+                student.idade = new_data['idade']
+            elif 'turma_id' in new_data:
+                classroom = Classroom.query.get(new_data['turma_id'])
+                if not classroom:
+                    raise ClassroomNotFound
+                else:
+                    student.turma_id = new_data['turma_id']
+            elif 'data_nascimento' in new_data:
+                student.data_nascimento = new_data['data_nascimento']
+            elif 'nota_primeiro_semestre' in new_data:
+                student.nota_primeiro_semestre = new_data['nota_primeiro_semestre']
+            elif 'nota_segundo_semestre' in new_data:
+                student.nota_segundo_semestre = new_data['nota_segundo_semestre']
+
         db.session.commit()
 
     @staticmethod
